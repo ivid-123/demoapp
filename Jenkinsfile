@@ -247,8 +247,8 @@ pipeline {
                         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
                         //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
                         mimeType: 'text/html',
-                        // subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                         subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                        subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                        //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
                         to: "${MAIL_TO}",
                         replyTo: "${MAIL_TO}"
         }
@@ -256,8 +256,8 @@ pipeline {
 
                         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',
-                        // subject: "[Jenkins] ${currentBuild.fullDisplayName}",
-                          subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                        subject: "[Jenkins] ${currentBuild.fullDisplayName}",
+                        //   subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
                         to: "${MAIL_TO}",
                         replyTo: "${MAIL_TO}",
                         recipientProviders: [[$class: 'CulpritsRecipientProvider']]
