@@ -1,0 +1,16 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$VideoTool-primary: mat-palette($mat-indigo);
+$VideoTool-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$VideoTool-warn: mat-palette($mat-red);
+
+$VideoTool-theme: mat-light-theme(
+  $VideoTool-primary,
+  $VideoTool-accent,
+  $VideoTool-warn
+);
+
+@include angular-material-theme($VideoTool-theme);

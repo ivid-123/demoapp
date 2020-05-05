@@ -1,0 +1,73 @@
+.card {
+	top: 672px;
+	left: 69px;
+	width: 403px;
+	height: 226px;
+	background: transparent linear-gradient(0deg, #647592D9 0%, #505D7300 100%) 0% 0% no-repeat padding-box;
+}
+
+  @media (min-width: 100px) {
+    .cards { 
+        grid-template-columns: repeat(2, 2fr); 
+    }
+  }
+
+  .longestCard {
+    top: 193px;
+    left: 69px;
+    width: 822px;
+    height: 460px;
+    background: #011133 0% 0% no-repeat padding-box;
+  }
+     .displayInlineBlock {
+        display: inline-block;
+    }
+    .marginRight10px{
+        margin-right: 10px;
+    }
+
+    .marginTop10px{
+        margin-top: 10px;
+    }
+
+    .marginBottom10px{
+        margin-bottom: 10px;
+    }
+    .marginBottom12px{
+      margin-bottom: 12px;
+    }
+    .marginRight19px{
+      margin-right: 19px;
+    }
+    .marginTopNegative40px {
+      margin-top: -40px;
+    }
+
+    video {
+      width: inherit;
+      height: inherit;
+      object-fit: fill;
+    }
+/* ----------- Non-Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+    .longestCard{width: 640px;
+    height: 270px;}
+    .displayInlineBlock{width: 310px;
+    height: 186px;
+    margin-bottom: 15px;}
+}
+
+
+/* ----------- Retina Screens ----------- */
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+	.longestCard {
+		width: 640px;
+	}
+	.displayInlineBlock {
+		width: 310px;
+	}
+}

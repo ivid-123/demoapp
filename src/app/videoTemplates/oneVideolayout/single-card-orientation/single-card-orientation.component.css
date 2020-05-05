@@ -1,0 +1,82 @@
+.card {
+	top: 672px;
+	left: 69px;
+	width: 403px;
+	height: 226px;
+	background: transparent linear-gradient(0deg, #647592D9 0%, #505D7300 100%) 0% 0% no-repeat padding-box;
+}
+
+  .longestCard {
+    top: 193px;
+    left: 69px;
+    width: 816px;
+    height: 460px;
+    background: #011133 0% 0% no-repeat padding-box;
+  }
+       .displayInlineBlock {
+        display: inline-block;
+    }
+    .marginTop0px{
+        margin-top: 0px;
+    }
+
+.displayInlineBlock {
+	display: inline-block;
+}
+
+.marginRight10px {
+	margin-right: 10px;
+}
+
+.marginTop0px {
+	margin-top: 0px;
+}
+
+video {
+	width: inherit;
+	height: inherit;
+	object-fit: fill;
+}
+
+.bottomLayer {
+	top: 977px;
+	left: 0px;
+	width: 1920px;
+	height: 104px;
+	background: #E0E3E9 0% 0% no-repeat padding-box;
+	box-shadow: 0px -3px 6px #00000029;
+	opacity: 1;
+}
+
+.marginTop15px {
+	margin-top: 15px;
+}
+
+.iconBar {
+	top: 1005px;
+	left: 180px;
+	width: 379px;
+	height: 49px;
+	background: #E0E3E9 0% 0% no-repeat padding-box;
+	opacity: 1;
+}
+
+
+/* ----------- Non-Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+    .longestCard{width: 630px;
+    height: 343px;}
+    
+}
+
+
+/* ----------- Retina Screens ----------- */
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+	.longestCard {
+		width: 630px;
+	}
+}

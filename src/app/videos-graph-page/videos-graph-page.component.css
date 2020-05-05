@@ -1,0 +1,19 @@
+.videoSection {
+	top: 139px;
+	left: 0px;
+	width: 960px;
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	opacity: 1;
+	margin: 54px 69px 0px 69px;
+}
+
+.mainPage {
+	margin: 0 0 50px 0;
+	height: auto;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}

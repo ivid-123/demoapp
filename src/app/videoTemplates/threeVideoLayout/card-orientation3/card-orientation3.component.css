@@ -1,0 +1,51 @@
+.card {
+	top: 672px;
+	left: 69px;
+	width: 403px;
+	height: 226px;
+	background: transparent linear-gradient(0deg, #647592D9 0%, #505D7300 100%) 0% 0% no-repeat padding-box;
+}
+
+.cards {
+	top: 139px;
+	left: 0px;
+	width: 960px;
+	height: 838px;
+	background: #FFFFFF 0% 0% no-repeat padding-box;
+	opacity: 1;
+}
+
+@media (min-width: 100px) {
+	.cards {
+		grid-template-columns: repeat(2, 2fr);
+	}
+}
+
+.longestCard {
+	top: 193px;
+	left: 69px;
+	width: 816px;
+	height: 460px;
+	background: #011133 0% 0% no-repeat padding-box;
+}
+
+.displayInlineBlock {
+	display: inline-block;
+}
+
+.marginRight10px {
+	margin-right: 10px;
+}
+
+.marginTop10px {
+	margin-top: 10px;
+}
+
+.marginBottom10px {
+	margin-bottom: 10px;
+}
+
+video {
+	width: inherit;
+	height: inherit;
+}

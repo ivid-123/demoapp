@@ -1,0 +1,233 @@
+.ds-container{
+  left: 0px;
+  height: 80px;
+  background: #E0E3E9 0% 0% no-repeat padding-box;
+  box-shadow: 0px -3px 6px #00000029;
+  opacity: 1;
+  position: fixed;
+  bottom: 0;
+}
+  
+  ul{list-style-type: none;}
+  ul li{float: left; padding-right: 25px;}
+  a img{cursor: pointer;}
+  input[type='range'] {
+    height: 18px;
+    background: #00205B 0% 0% no-repeat padding-box;
+    /* opacity: 0.05; */
+    width: 450px;
+}
+
+.play {
+	width: 50px !important;
+}
+
+.pause {
+	width: 57px !important;
+	margin-left: -7px;
+}
+
+ul {
+	list-style-type: none;
+}
+
+ul li {
+	float: left;
+	width: 70px;
+}
+
+a img {
+	cursor: pointer;
+}
+
+input[type='range'] {
+	height: 18px;
+	background: #00205B 0% 0% no-repeat padding-box;
+	/* opacity: 0.05; */
+	width: 450px;
+}
+
+.slider {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 25px;
+	outline: none;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+	opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 3px;
+	height: 16px;
+	background: #E4002B 0% 0% no-repeat padding-box;
+	cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+	width: 3px;
+	height: 16px;
+	background: #E4002B 0% 0% no-repeat padding-box;
+	cursor: pointer;
+}
+
+
+/* Tooltip container */
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
+	color: #E4002B;
+	text-align: center;
+	border-radius: 6px;
+	font-weight: bold;
+	font-family: sans-serif;
+	/* Position the tooltip text - see examples below! */
+	position: absolute;
+	z-index: 1;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.marginTop30px {
+	margin-top: 30px;
+}
+
+.t1 {
+	width: 62px;
+	height: 21px;
+	text-align: left;
+	letter-spacing: 0;
+	color: #647592;
+	opacity: 1;
+}
+
+.paddingLeft518px {
+	padding-left: 518px;
+}
+
+.paddingLeft400px {
+	padding-left: 400px;
+}
+
+.paddingLeft15px {
+    padding-left: 15px;
+}
+.iconBar{
+  padding-top: 8px;
+  width: 35%;
+  float: left;
+  padding-left: 178px;
+}
+.timeline{width: 45%;float: left;padding-top: 25px;}
+.Searchbox{width: 20%;float: right;padding-top: 8px;}
+.material-icons.pauseblue { color: #00205B; font-size: 42px;margin-top: -6px;
+    cursor: pointer; }
+    .material-icons.backwarforward { color: #00205B; font-size: 42px;margin-top: -6px;
+        cursor: pointer; }   
+.searchinput{width: 256px;height: 32px;}
+#button-holder{margin-top: -26px;
+    margin-left: 5px;
+}
+
+.material-icons.pauseblue {
+	color: #00205B;
+	font-size: 42px;
+	margin-top: -6px;
+	cursor: pointer;
+}
+
+.material-icons.backwarforward {
+	color: #00205B;
+	font-size: 42px;
+	margin-top: -6px;
+	cursor: pointer;
+}
+
+.searchinput {
+	width: 256px;
+	height: 32px;
+}
+
+#button-holder {
+	margin-top: -26px;
+	margin-left: 5px;
+}
+
+
+/* ----------- Non-Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+	  .ds-container{
+		  height: 65px;
+	  } 
+    .iconBar{
+      padding-top: 0px;
+      width: 40%;
+      padding-left: 100px; 
+      }
+      input[type='range'] {
+        height: 18px;
+        background: #00205B 0% 0% no-repeat padding-box;
+        /* opacity: 0.05; */
+        width:378px;
+    }
+      .timeline{width: 45%;float: left;padding-top: 18px;}
+      .Searchbox{width: 15%;float: right;padding-top: 5px;}
+    .searchinput{width: 200px;height: 32px;}
+    .paddingLeft518px {
+        padding-left: 318px;
+    }
+    .paddingLeft400px{
+      padding-left: 328px;
+    }  
+}
+
+
+/* ----------- Retina Screens ----------- */
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+	.iconBar {
+		padding-top: 30px;
+		width: 34%;
+		margin-left: 102px;
+	}
+	input[type='range'] {
+		height: 18px;
+		background: #00205B 0% 0% no-repeat padding-box;
+		/* opacity: 0.05; */
+		width: 378px;
+	}
+	.timeline {
+		width: 40%;
+		float: left;
+		padding-top: 50px;
+	}
+	.Searchbox {
+		width: 15%;
+		float: right;
+		padding-top: 25px;
+	}
+	.searchinput {
+		width: 200px;
+		height: 32px;
+	}
+	.paddingLeft518px {
+		padding-left: 318px;
+	}
+}

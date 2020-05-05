@@ -1,0 +1,16 @@
+<div class="cards">
+    <div class="card displayInlineBlock marginBottom12px marginTopNegative40px">
+        <video controls muted #videoOne>
+            <source src="{{videoUrlTwo}}" type="video/mp4">
+                <track (cuechange)="videoCueTrackone($event)" kind="subtitles" label="English subtitles" src="{{videoVttTwo}}"
+                srclang="en" default>
+        </video>
+    </div>
+    <div class="card longestCard">
+        <video controls muted #videoTwo>
+            <source src="{{videoUrl}}" type="video/mp4">
+                <track (cuechange)="videoCueTracktwo($event)" kind="subtitles" label="English subtitles" src="{{videoVtt}}"
+                srclang="en" default>
+        </video>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div>
+  <div class="paddingTop28px ds-header ds-header--dark" data-theme="dark">
+    <span class="ds-header-logo"></span>
+    <span class="borderRight"></span>
+    <span class="t1 paddingLeft16px displayInlineBlock"
+      >Data Collection Video</span
+    >
+    <span class="floatRight">
+      <select class="ds-select">
+        <option value="username">System USER</option>
+      </select>
+    </span>
+  </div>
+  <div class="menuBar">
+    <button mat-button [matMenuTriggerFor]="belowMenu" class="menuIcon"></button
+    ><span *ngIf="menuTextDisplay" class="t2 menuText">Menu</span>
+    <mat-menu #belowMenu="matMenu" yPosition="below">
+      <div *ngFor="let menuItem of menuItems">
+        <button
+          mat-menu-item
+          (click)="openOptionMenu(menuItem.value); focusItem($event)"
+          [disabled]="menuItem.disabled"
+          style="color:{{ menuItem.defaultColor }}"
+        >
+          {{ menuItem.label }}
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+</div>

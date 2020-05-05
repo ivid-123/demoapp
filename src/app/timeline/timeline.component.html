@@ -1,0 +1,44 @@
+<div class="ds-container">
+        <div class ="iconBar">
+           <ul>
+              <li><a class="rewind-10"><img src="assets/icons/rewind-10.svg"></a></li>
+              <li><a class="skip-backward"><i class="material-icons md-36 backwarforward">
+                 skip_previous
+                 </i></a>
+              </li>
+              <li *ngIf="playpause;else pause" class="pause"><a  (click)="playVideos($event)"><i class="material-icons md-36 pauseblue">
+               play_arrow
+               </i></a></li>
+              <ng-template #pause>
+                 <li class="pause"><a  (click)="pauseVideos($event)"><i class="material-icons md-36 pauseblue" >
+                    pause
+                    </i></a>
+                 </li>
+              </ng-template>
+              <li><a class="skip-forward"><i class="material-icons md-36 backwarforward">
+                 skip_next
+                 </i></a>
+              </li>
+              <li><a class="fast-forward-10"><img src="assets/icons/fast-forward-10.svg"></a></li>
+           </ul>
+        </div>
+        <div class ="timeline">
+           <div class="paddingLeft15px">
+              <div class="tooltip">
+                 <input #slider type="range" class="slider"  value="0">
+                 <span #sliderPosition class="tooltiptext">00:00:00</span>
+              </div>
+              <div>
+                 <span class="t1">{{gmtStartTime}}</span>
+                 <span class="t1 paddingLeft400px">{{gmtEndTime}}</span>
+              </div>
+           </div>
+        </div>
+        <div class ="Searchbox">
+           <label>Go To GMT</label><br/>
+           <input type="text" class="searchinput">
+           <div id='button-holder'>
+              <img src='/assets/icons/search-24px.svg' />
+           </div>
+        </div>
+     </div>

@@ -1,0 +1,20 @@
+<div class="container">
+	<div class="mainPage">
+		<div class="videoSection">
+			<!--Start div-->
+			<div [ngSwitch]="layout">
+				<div *ngSwitchCase="'1'">
+					<app-single-card-orientation ></app-single-card-orientation>
+				</div>
+				<div *ngSwitchCase="'2'">
+					<app-two-card-orientation></app-two-card-orientation>
+				</div>
+				<div *ngSwitchCase="'3'">
+					<app-card-orientation2></app-card-orientation2>
+				</div>
+			</div>
+			<!--end div-->
+		</div>
+	</div>
+	<app-timeline></app-timeline>
+</div>

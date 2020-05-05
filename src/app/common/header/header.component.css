@@ -1,0 +1,107 @@
+.ds-header-logo {
+    padding: 0px 46px;
+}
+
+.ds-header.ds-header--dark {
+    display: inline-block;
+}
+
+.t1 {
+    font-size: 19px;
+    text-align: left;
+    letter-spacing: 0;
+    color: #ffffff;
+}
+
+.t2 {
+    font-size: 28px;
+    text-align: left;
+    letter-spacing: 0;
+    color: #ffffff;
+}
+
+
+.menuBar {
+    height: 80px;
+    background: #00205B 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    opacity: 1;
+}
+
+.menuIcon {
+    top: 90px;
+    left: 40px;
+    width: 40px;
+    position: absolute;
+    height: 40px;
+    background: transparent url(/assets/icons/menu-24px.png) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border: none;
+    z-index: 10000;
+    cursor: pointer;
+}
+
+.menuText {
+    top: 99px;
+    left: 117px;
+    width: 184px;
+    height: 38px;
+    position: absolute;
+    z-index: 10000;
+}
+
+
+.ds-select {
+    top: 24px;
+    left: 1682px;
+    width: 215px;
+    height: 32px;
+    opacity: 1;
+    background-color: inherit;
+    color: #9496A8;
+}
+
+.paddingLeft23px {
+    padding-left: 23px;
+}
+
+.paddingLeft16px {
+    padding-left: 16px;
+}
+
+.displayInlineBlock {
+    display: inline-block;
+}
+
+.paddingTop28px {
+    padding-top: 28px;
+}
+
+.borderRight {
+    border-right: 2px solid #011133;
+}
+
+.floatRight {
+    float: right;
+}
+
+
+/* ----------- Non-Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+    .menuText{  
+top: 65px;
+    }
+    .menuIcon{ top:55px}
+    .menuBar{height: 40px;}
+    .paddingTop28px{padding-top: 16px;}
+}
+
+
+/* ----------- Retina Screens ----------- */
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+
+}

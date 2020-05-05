@@ -1,0 +1,10 @@
+include:
+  - project: "dep/library/ci-library"
+    ref: production
+    file: "/stages/build.yml"
+
+image: node:latest
+
+stages:
+    - build-image
+    - functional-test
