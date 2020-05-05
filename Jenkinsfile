@@ -100,7 +100,11 @@ pipeline {
             }
         }
         stage('Code Coverage') {
-            sh 'npm run sonar'
+             steps {
+                script {
+                   sh 'npm run sonar'
+                }
+            }
         }
         stage('Store Artifact'){
             steps{
