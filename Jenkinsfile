@@ -92,13 +92,7 @@ pipeline {
                 }
             }
         }
-        stage('Sonar Report') {
-            steps {
-                script {
-                    sh 'npm run sonar'
-                }
-            }
-        }
+        
         // stage('Quality Gates') {
         //     environment {
         //         scannerHome = tool 'sonarqube-scanner'
@@ -116,6 +110,13 @@ pipeline {
             steps {
                 script {
                     sh 'npm run build --prod'
+                }
+            }
+        }
+        stage('Sonar Report') {
+            steps {
+                script {
+                    sh 'npm run sonar'
                 }
             }
         }
