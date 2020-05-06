@@ -28,13 +28,13 @@ pipeline {
         ARTIFACT_FOLDER = "target"
         PORT = 80;
         MAIL_TO = 'ashish.mishra2@soprasteria.com,arvind.singh@soprasteria.com,pallav.narang@soprasteria.com,jenkinstestuser01@gmail.com'
-// astha.bansal@soprasteria.com
+        // astha.bansal@soprasteria.com
     }
 
     stages {
         stage('Get Latest Code') {
             steps {
-                    script {
+                script {
                     openshift.withCluster() {
                         openshift.withProject() {
                             echo "Using project: ${openshift.project()}"
@@ -92,17 +92,30 @@ pipeline {
                 }
             }
         }
+        stage('Sonar Report') {
+            steps {
+                script {
+                    sh 'npm run sonar'
+                }
+            }
+        }
+        stage('Quality Gates') {
+            environment {
+                scannerHome = tool 'SonarQubeScanner'
+            }
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
         stage('Build App') {
             steps {
                 script {
                     sh 'npm run build --prod'
-                }
-            }
-        }
-        stage('Code Coverage') {
-             steps {
-                script {
-                   sh 'npm run sonar'
                 }
             }
         }
@@ -127,7 +140,6 @@ pipeline {
                 }
             }
         }
-
         stage('Create Image Builder') {
             when {
                 expression {
@@ -217,6 +229,18 @@ pipeline {
                     }
                 }
             }
+            post {
+                success {
+                    //cest = TimeZone.getTimeZone("CEST")
+                    emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+                        //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                        mimeType: 'text/html',
+                            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                                //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+                                to: "${MAIL_TO}",
+                                    replyTo: "${MAIL_TO}"
+                }
+            }
         }
         stage('Scale in STAGE') {
             steps {
@@ -242,25 +266,16 @@ pipeline {
         // success {
         //     mail to: "${MAIL_TO}", subject: 'The Pipeline success:'
         // }
-        success {
-                        //cest = TimeZone.getTimeZone("CEST")
-                        emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-                        //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                        mimeType: 'text/html',
-                        subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                        //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-                        to: "${MAIL_TO}",
-                        replyTo: "${MAIL_TO}"
-        }
+
         failure {
 
-                        emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-                        mimeType: 'text/html',
-                        subject: "[Jenkins] ${currentBuild.fullDisplayName}",
+            emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+                mimeType: 'text/html',
+                    subject: "[Jenkins] ${currentBuild.fullDisplayName}",
                         //   subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
                         to: "${MAIL_TO}",
-                        replyTo: "${MAIL_TO}",
-                        recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                            replyTo: "${MAIL_TO}",
+                                recipientProviders: [[$class: 'CulpritsRecipientProvider']]
         }
 
     }
