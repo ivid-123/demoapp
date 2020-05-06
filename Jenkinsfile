@@ -92,13 +92,19 @@ pipeline {
                 }
             }
         }
-        
+        stage('Sonar Report') {
+            steps {
+                script {
+                    sh 'npm run sonar'
+                }
+            }
+        }
         // stage('Quality Gates') {
         //     environment {
         //         scannerHome = tool 'sonarqube-scanner'
         //     }
         //     steps {
-        //         withSonarQubeEnv('sonarqube-scanner') {
+        //         withSonarQubeEnv('sonarqube') {
         //             sh "${scannerHome}/bin/sonar-scanner"
         //         }
         //         timeout(time: 10, unit: 'MINUTES') {
@@ -110,13 +116,6 @@ pipeline {
             steps {
                 script {
                     sh 'npm run build --prod'
-                }
-            }
-        }
-        stage('Sonar Report') {
-            steps {
-                script {
-                    sh 'npm run sonar'
                 }
             }
         }
