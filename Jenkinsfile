@@ -99,19 +99,19 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gates') {
-            environment {
-                scannerHome = tool 'sonarqube-scanner'
-            }
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        // stage('Quality Gates') {
+        //     environment {
+        //         scannerHome = tool 'sonarqube-scanner'
+        //     }
+        //     steps {
+        //         withSonarQubeEnv('sonarqube-scanner') {
+        //             sh "${scannerHome}/bin/sonar-scanner"
+        //         }
+        //         timeout(time: 10, unit: 'MINUTES') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
         stage('Build App') {
             steps {
                 script {
