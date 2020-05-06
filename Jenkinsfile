@@ -61,16 +61,16 @@ pipeline {
 
             failFast true
             parallel {
-                stage('Prettier'){
-                    when {
-                        environment name: "EXECUTE_VALID_PRETTIER_STAGE", value: "true"
-                    }
-                    steps{
-                        echo 'Validation Stage - prettier'
-                        //sh 'npm run prettier:check'
-                    }
-                }
-                stage('Tslint'){
+                // stage('Prettier'){
+                //     when {
+                //         environment name: "EXECUTE_VALID_PRETTIER_STAGE", value: "true"
+                //     }
+                //     steps{
+                //         echo 'Validation Stage - prettier'
+                //         //sh 'npm run prettier:check'
+                //     }
+                // }
+                stage('Lint'){
                     when {
                         environment name: "EXECUTE_VALID_TSLINT_STAGE", value: "true"
                     }
@@ -79,7 +79,7 @@ pipeline {
                         // sh 'npm run lint'
                     }
                 }
-                stage('test'){
+                stage('Unit Test'){
                     when {
                         environment name: "EXECUTE_TEST_STAGE", value: "true"
                     }
@@ -92,7 +92,15 @@ pipeline {
                 }
             }
         }
-        stage('Sonar Report') {
+        
+        stage('Source Build') {
+            steps {
+                script {
+                    sh 'npm run build --prod'
+                }
+            }
+        }
+        stage('Quality Analysis') {
             steps {
                 script {
                     sh 'npm run sonar'
@@ -112,13 +120,6 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Build App') {
-            steps {
-                script {
-                    sh 'npm run build --prod'
-                }
-            }
-        }
         stage('Store Artifact'){
             steps{
                 script{
@@ -140,7 +141,7 @@ pipeline {
                 }
             }
         }
-        stage('Create Image Builder') {
+        stage('Configure Build') {
             when {
                 expression {
                     openshift.withCluster() {
