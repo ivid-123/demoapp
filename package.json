@@ -10,9 +10,13 @@
     "test:old": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier:check": "prettier --list-different \"src/**/*.ts\"",
+    "prettier:check": "prettier --list-different \"src/app/**/*.ts\"",
     "stylelint": "stylelint \"src/**/*.css\"",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "prettier1": "prettier --list-different --write \"**/{*.{js?(on),ts,md,yml},.*.yml}\"",
+    "prettier": "prettier --list-different --write  \"src/app/**/*.ts\"",
+    "prettier-check": "npm run prettier -- --write=false",
+    "precise-commits": "precise-commits --check-only \"src/app/**/*.ts\""
   },
   "lint-staged": {
     "*.scss": [
@@ -43,7 +47,9 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
+    "husky": "^4.2.5",
     "intl": "^1.2.5",
+    "pretty-quick": "^2.0.1",
     "rxjs": "~6.3.3",
     "save-dev": "0.0.1-security",
     "tslib": "^1.9.0",
@@ -69,7 +75,8 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sonarqube-unit-reporter": "0.0.21",
-    "prettier": "2.0.5",
+    "precise-commits": "^1.0.2",
+    "prettier": "^2.0.5",
     "prettify-xml": "^1.2.0",
     "protractor": "~5.4.0",
     "sonar-scanner": "^3.1.0",
@@ -79,5 +86,10 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-sonarts": "^1.9.0",
     "typescript": "~3.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s format:check lint"
+    }
   }
 }
