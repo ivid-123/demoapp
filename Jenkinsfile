@@ -76,7 +76,7 @@ pipeline {
                     }
                     steps{
                         echo 'Valildation Stage - tslint'
-                        // sh 'npm run lint'
+                        //sh 'npm run lint'
                     }
                 }
                 stage('Unit Test'){
