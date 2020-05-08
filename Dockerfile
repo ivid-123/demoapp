@@ -1,4 +1,4 @@
-FROM nginx:mainline-alpine
+FROM nginx
 
 RUN echo $(ls /etc/nginx/conf.d/)
 ## Copy our nginx config
