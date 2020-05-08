@@ -1,16 +1,8 @@
 FROM nginx:mainline-alpine
 
-RUN echo $(ls /etc/nginx/)
-RUN echo $(ls /usr/share/nginx/)
-RUN echo $(ls /usr/local/nginx/)
-RUN echo $(ls /usr/local/etc/nginx)
-RUN echo $(ls /etc/nginx/)
+RUN echo $(ls /etc/nginx/conf.d/)
 ## Copy our nginx config
 COPY config/nginx/ /etc/nginx/conf.d/
-COPY config/nginx/ /usr/share/nginx/conf.d/
-COPY config/nginx/ /usr/local/nginx/conf
-COPY config/nginx/ /etc/nginx
-COPY config/nginx/ /usr/local/etc/nginx
 
 ## Remove default nginx website
 # RUN rm -rf /usr/share/nginx/html/*
