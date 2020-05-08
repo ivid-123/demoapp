@@ -4,7 +4,10 @@ import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 fdescribe('AppComponent', () => {
+  var originalTimeout;
   beforeEach(async(() => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
