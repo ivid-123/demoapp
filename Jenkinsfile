@@ -230,18 +230,18 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    //cest = TimeZone.getTimeZone("CEST")
-                    emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-                        //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                        mimeType: 'text/html',
-                            subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
-                                //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-                                to: "${MAIL_TO}",
-                                    replyTo: "${MAIL_TO}"
-                }
-            }
+            // post {
+            //     success {
+            //         //cest = TimeZone.getTimeZone("CEST")
+            //         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+            //             //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+            //             mimeType: 'text/html',
+            //                 subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
+            //                     //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+            //                     to: "${MAIL_TO}",
+            //                         replyTo: "${MAIL_TO}"
+            //     }
+            // }
         }
         stage('Scale in STAGE') {
             steps {
@@ -252,33 +252,18 @@ pipeline {
         }
 
     }
-    post {
-        // always {
-        //     echo 'I will always say Hello again!'
+    // post {
+    //     failure {
 
-        //     emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-        //         recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-        //             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+    //         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+    //             mimeType: 'text/html',
+    //                  subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
+    //                     //   subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+    //                     to: "${MAIL_TO}",
+    //                         replyTo: "${MAIL_TO}",
+    //                             recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+    //     }
 
-        // }
-        // failure {
-        //     mail to: "${MAIL_TO}", subject: 'The Pipeline failed:'
-        // }
-        // success {
-        //     mail to: "${MAIL_TO}", subject: 'The Pipeline success:'
-        // }
-
-        failure {
-
-            emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-                mimeType: 'text/html',
-                     subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
-                        //   subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-                        to: "${MAIL_TO}",
-                            replyTo: "${MAIL_TO}",
-                                recipientProviders: [[$class: 'CulpritsRecipientProvider']]
-        }
-
-    }
+    // }
 
 }
