@@ -175,7 +175,7 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject(DEV_PROJECT) {
                             /**
-                            *   Applies the build configuration in DEV_PROJECT to start build
+                            *   Applies the build configuration ${TEMPLATE_NAME} in DEV_PROJECT to start build
                             *   It produces the image.
                             */
                             openshift.selector("bc", "${TEMPLATE_NAME}").startBuild("--from-archive=${ARTIFACT_FOLDER}/${APPLICATION_NAME}_${BUILD_NUMBER}.tar.gz", "--wait=true")
