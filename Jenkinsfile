@@ -156,10 +156,7 @@ pipeline {
                             *   This creates the build configuration in the DEV project
                             *   Creates a entry in Builds as none latest and Images section with empty tag
                             */
-                            echo 'creating a new build configuration'
-                            // openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:mainline-alpine", "--binary=true")
                             openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:latest", "--binary=true")
-                            echo 'new build configuration created'
                         }
 
                     }
@@ -173,7 +170,7 @@ pipeline {
                         openshift.withProject(DEV_PROJECT) {
                             /**
                             *   Applies the build configuration ${TEMPLATE_NAME} in DEV_PROJECT to start build
-                            *   It produces the image.
+                            *   It produces the image with latest tag and also build that shows the number
                             */
                             openshift.selector("bc", "${TEMPLATE_NAME}").startBuild("--from-archive=${ARTIFACT_FOLDER}/${APPLICATION_NAME}_${BUILD_NUMBER}.tar.gz", "--wait=true")
                         }
@@ -181,32 +178,35 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy to DEV') {
-        //     when {
-        //         expression {
-        //             openshift.withCluster() {
-        //                 openshift.withProject(DEV_PROJECT) {
-        //                     return !openshift.selector('dc', "${TEMPLATE_NAME}").exists()
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             openshift.withCluster() {
-        //                 openshift.withProject(DEV_PROJECT) {
-        //                     def app = openshift.newApp("${TEMPLATE_NAME}:latest")
-        //                     app.narrow("svc").expose("--port=${PORT}");
-        //                     def dc = openshift.selector("dc", "${TEMPLATE_NAME}")
-        //                     while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
-        //                         sleep 10
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
+        stage('Deploy to DEV') {
+            when {
+                expression {
+                    openshift.withCluster() {
+                        openshift.withProject(DEV_PROJECT) {
+                            return !openshift.selector('dc', "${TEMPLATE_NAME}").exists()
+                        }
+                    }
+                }
+            }
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject(DEV_PROJECT) {
+                            /**
+                            *   It uses the image create in previous step with latest tag e.g. ${TEMPLATE_NAME}:latest
+                            *   It creates the deployment config with the ${TEMPLATE_NAME} in DEV_PROJECT
+                            */
+                            def app = openshift.newApp("${TEMPLATE_NAME}:latest")
+                            app.narrow("svc").expose("--port=${PORT}");
+                            def dc = openshift.selector("dc", "${TEMPLATE_NAME}")
+                            while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                                sleep 10
+                            }
+                        }
+                    }
+                }
+            }
+        }
         // stage('Promote to STAGE?') {
         //     steps {
         //         timeout(time: 15, unit: 'MINUTES') {
