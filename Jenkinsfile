@@ -54,6 +54,34 @@ pipeline {
                 echo 'installing dependencies'
             }
         }
+        stage('Source Build') {
+            steps {
+                script {
+                    sh 'npm run build --prod'
+                }
+            }
+        }
+        stage('Store Artifact'){
+            steps{
+                script{
+                    def safeBuildName = "${APPLICATION_NAME}_${BUILD_NUMBER}",
+                        artifactFolder = "${ARTIFACT_FOLDER}",
+                        fullFileName = "${safeBuildName}.tar.gz",
+                        applicationZip = "${artifactFolder}/${fullFileName}"
+                    applicationDir = ["src",
+                        "dist",
+                        "config",
+                        "Dockerfile",
+                    ].join(" ");
+                    def needTargetPath = !fileExists("${artifactFolder}")
+                    if (needTargetPath) {
+                        sh "mkdir ${artifactFolder}"
+                    }
+                    sh "tar -czvf ${applicationZip} ${applicationDir}"
+                    archiveArtifacts artifacts: "${applicationZip}", excludes: null, onlyIfSuccessful: true
+                }
+            }
+        }
         stage('Validation'){
             when {
                 environment name: "EXECUTE_VALIDATION_STAGE", value: "true"
@@ -92,14 +120,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Source Build') {
-            steps {
-                script {
-                    sh 'npm run build --prod'
-                }
-            }
-        }
         // stage('Quality Analysis') {
         //     steps {
         //         script {
@@ -120,27 +140,6 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Store Artifact'){
-            steps{
-                script{
-                    def safeBuildName = "${APPLICATION_NAME}_${BUILD_NUMBER}",
-                        artifactFolder = "${ARTIFACT_FOLDER}",
-                        fullFileName = "${safeBuildName}.tar.gz",
-                        applicationZip = "${artifactFolder}/${fullFileName}"
-                    applicationDir = ["src",
-                        "dist",
-                        "config",
-                        "Dockerfile",
-                    ].join(" ");
-                    def needTargetPath = !fileExists("${artifactFolder}")
-                    if (needTargetPath) {
-                        sh "mkdir ${artifactFolder}"
-                    }
-                    sh "tar -czvf ${applicationZip} ${applicationDir}"
-                    archiveArtifacts artifacts: "${applicationZip}", excludes: null, onlyIfSuccessful: true
-                }
-            }
-        }
         stage('Configure Build') {
             when {
                 expression {
@@ -157,8 +156,8 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject(DEV_PROJECT) {
                             echo 'creating a new build configuration'
-                            // openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:mainline-alpine", "--binary=true")
-                            openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:latest", "--binary=true")
+                            openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:mainline-alpine", "--binary=true")
+                            // openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:latest", "--binary=true")
                             echo 'new build configuration created'
                         }
 
