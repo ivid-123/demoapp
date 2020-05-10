@@ -4,8 +4,8 @@ metadata:
   annotations:
     description: 'hello world'
   labels:
-    app: video-tool-app1
-  name: video-tool-app1
+    app: video-tool-app
+  name: video-tool-app
 spec:
   resources:
     limits:
