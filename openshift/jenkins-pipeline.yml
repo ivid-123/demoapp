@@ -5,7 +5,7 @@ metadata:
     description: 'hello world'
   labels:
     app: video-tool-app1
-  name: ivid.datacollection-video-tool-app-develop-integration
+  name: video-tool-app1
 spec:
   resources:
     limits:
