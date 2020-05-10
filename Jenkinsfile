@@ -156,8 +156,8 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject(DEV_PROJECT) {
                             echo 'creating a new build configuration'
-                            openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:mainline-alpine", "--binary=true")
-                            // openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:latest", "--binary=true")
+                            // openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:mainline-alpine", "--binary=true")
+                            openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:latest", "--binary=true")
                             echo 'new build configuration created'
                         }
 
