@@ -3,7 +3,7 @@ kind: BuildConfig
 metadata:
   labels:
     app: ivid.datacollection-video-tool-app-develop-integration
-  name: ivid.datacollection-video-tool-app-develop-integration
+  name: video-tool-app1
 spec:
   resources:
     limits:
