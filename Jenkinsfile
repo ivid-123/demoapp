@@ -169,84 +169,84 @@ pipeline {
             }
         }
         
-        stage('Build Image') {
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject(DEV_PROJECT) {
-                            openshift.selector("bc", "${TEMPLATE_NAME}").startBuild("--from-archive=${ARTIFACT_FOLDER}/${APPLICATION_NAME}_${BUILD_NUMBER}.tar.gz", "--wait=true")
-                        }
-                    }
-                }
-            }
-        }
-        stage('Deploy to DEV') {
-            when {
-                expression {
-                    openshift.withCluster() {
-                        openshift.withProject(DEV_PROJECT) {
-                            return !openshift.selector('dc', "${TEMPLATE_NAME}").exists()
-                        }
-                    }
-                }
-            }
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject(DEV_PROJECT) {
-                            def app = openshift.newApp("${TEMPLATE_NAME}:latest")
-                            app.narrow("svc").expose("--port=${PORT}");
-                            def dc = openshift.selector("dc", "${TEMPLATE_NAME}")
-                            while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
-                                sleep 10
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Build Image') {
+        //     steps {
+        //         script {
+        //             openshift.withCluster() {
+        //                 openshift.withProject(DEV_PROJECT) {
+        //                     openshift.selector("bc", "${TEMPLATE_NAME}").startBuild("--from-archive=${ARTIFACT_FOLDER}/${APPLICATION_NAME}_${BUILD_NUMBER}.tar.gz", "--wait=true")
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Deploy to DEV') {
+        //     when {
+        //         expression {
+        //             openshift.withCluster() {
+        //                 openshift.withProject(DEV_PROJECT) {
+        //                     return !openshift.selector('dc', "${TEMPLATE_NAME}").exists()
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             openshift.withCluster() {
+        //                 openshift.withProject(DEV_PROJECT) {
+        //                     def app = openshift.newApp("${TEMPLATE_NAME}:latest")
+        //                     app.narrow("svc").expose("--port=${PORT}");
+        //                     def dc = openshift.selector("dc", "${TEMPLATE_NAME}")
+        //                     while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+        //                         sleep 10
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Promote to STAGE?') {
-            steps {
-                timeout(time: 15, unit: 'MINUTES') {
-                    input message: "Promote to STAGE?", ok: "Promote"
-                }
-                script {
-                    openshift.withCluster() {
-                        openshift.tag("${DEV_PROJECT}/${TEMPLATE_NAME}:latest", "${STAGE_PROJECT}/${TEMPLATE_NAME}:${STAGE_TAG}")
-                    }
-                }
-            }
-        }
+        // stage('Promote to STAGE?') {
+        //     steps {
+        //         timeout(time: 15, unit: 'MINUTES') {
+        //             input message: "Promote to STAGE?", ok: "Promote"
+        //         }
+        //         script {
+        //             openshift.withCluster() {
+        //                 openshift.tag("${DEV_PROJECT}/${TEMPLATE_NAME}:latest", "${STAGE_PROJECT}/${TEMPLATE_NAME}:${STAGE_TAG}")
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Rollout to STAGE') {
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject(STAGE_PROJECT) {
-                            if (openshift.selector('dc', '${TEMPLATE_NAME}').exists()) {
-                                openshift.selector('dc', '${TEMPLATE_NAME}').delete()
-                                openshift.selector('svc', '${TEMPLATE_NAME}').delete()
-                                openshift.selector('route', '${TEMPLATE_NAME}').delete()
-                            }
-                            openshift.newApp("${TEMPLATE_NAME}:${STAGE_TAG}").narrow("svc").expose("--port=${PORT}")
-                        }
-                    }
-                }
-            }
-            // post {
-            //     success {
-            //         //cest = TimeZone.getTimeZone("CEST")
-            //         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-            //             //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-            //             mimeType: 'text/html',
-            //                 subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
-            //                     //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-            //                     to: "${MAIL_TO}",
-            //                         replyTo: "${MAIL_TO}"
-            //     }
-            // }
-        }
+        // stage('Rollout to STAGE') {
+        //     steps {
+        //         script {
+        //             openshift.withCluster() {
+        //                 openshift.withProject(STAGE_PROJECT) {
+        //                     if (openshift.selector('dc', '${TEMPLATE_NAME}').exists()) {
+        //                         openshift.selector('dc', '${TEMPLATE_NAME}').delete()
+        //                         openshift.selector('svc', '${TEMPLATE_NAME}').delete()
+        //                         openshift.selector('route', '${TEMPLATE_NAME}').delete()
+        //                     }
+        //                     openshift.newApp("${TEMPLATE_NAME}:${STAGE_TAG}").narrow("svc").expose("--port=${PORT}")
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     // post {
+        //     //     success {
+        //     //         //cest = TimeZone.getTimeZone("CEST")
+        //     //         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
+        //     //             //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+        //     //             mimeType: 'text/html',
+        //     //                 subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
+        //     //                     //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
+        //     //                     to: "${MAIL_TO}",
+        //     //                         replyTo: "${MAIL_TO}"
+        //     //     }
+        //     // }
+        // }
         // stage('Scale in STAGE') {
         //     steps {
         //         script {
