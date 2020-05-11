@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  annotations:
+    description: 'Builds develop branch'
+  labels:
+    app: video-tool-app-label
+  name: ivid.datacollection-video-tool-app-release-promote-job
+spec:
+  resources:
+    limits:
+      cpu: '1000m'
+      memory: '1000Mi'
+  source:
+    git:
+      ref: release
+      uri: https://github.com/ivid-123/demoapp.git
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfilePath: Jenkinsfile.Promote
+    type: JenkinsPipeline
+  triggers:
+    - github:
+        secret: secret
+      type: GitHub
+    - generic:
+        secret: secret
+      type: Generic
+    - bitbucket:
+        secret: secret
+      type: Bitbucket
