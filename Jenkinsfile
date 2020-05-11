@@ -13,14 +13,14 @@ pipeline {
         EXECUTE_TAG_STAGE = "true"
         EXECUTE_BUILD_STAGE = "true"
 
-        APPLICATION_NAME = 'video-tool-app-hello'
+        APPLICATION_NAME = 'video-tool-app'
         GIT_REPO = "https://github.com/ivid-123/demoapp.git"
         GIT_BRANCH = "master"
         STAGE_TAG = "promoteToQA"
         DEV_TAG = "1.0"
         DEV_PROJECT = "dev"
         STAGE_PROJECT = "stage"
-        TEMPLATE_NAME = "video-tool-app-world"
+        TEMPLATE_NAME = "video-tool-template"
         ARTIFACT_FOLDER = "target"
         PORT = 8080;
         MAIL_TO = 'ashish.mishra2@soprasteria.com,arvind.singh@soprasteria.com,pallav.narang@soprasteria.com,jenkinstestuser01@gmail.com'
