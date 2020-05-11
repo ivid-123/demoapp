@@ -28,28 +28,6 @@ pipeline {
     }
 
     stages {
-        // stage('Get Latest Code') {
-        //     steps {
-        //         script {
-        //             openshift.withCluster() {
-        //                 openshift.withProject() {
-        //                     echo "Using project: ${openshift.project()}"
-        //                     openshift.selector("all", [template : "${TEMPLATE_NAME}"]).delete()
-        //                     if (openshift.selector("secrets", "${TEMPLATE_NAME}").exists()) {
-        //                         openshift.selector("secrets", "${TEMPLATE_NAME}").delete()
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
-        //     }
-        // }
-        // stage('Install Dependencies') {
-        //     steps {
-        //         sh 'npm install'
-        //         echo 'installing dependencies'
-        //     }
-        // }
         stage('Build & Package') {
             steps {
                 script {
@@ -207,74 +185,5 @@ pipeline {
                 }
             }
         }
-        stage('Promote to STAGE?') {
-            steps {
-                timeout(time: 15, unit: 'MINUTES') {
-                    input message: "Promote to STAGE?", ok: "Promote"
-                }
-                script {
-                    openshift.withCluster() {
-                        /**
-                        *   should have permissions to push/pull images from 'dev' and push/pull images to 'stage' 
-                        *   We tag our image, making it available in stage namespace
-                        */
-                        openshift.tag("${DEV_PROJECT}/${TEMPLATE_NAME}:latest", "${STAGE_PROJECT}/${TEMPLATE_NAME}:${STAGE_TAG}")
-                    }
-                }
-            }
-        }
-        stage('Rollout to STAGE') {
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject(STAGE_PROJECT) {
-                            // delete service, route, deployment config of that deployment
-                            if (openshift.selector('dc', '${TEMPLATE_NAME}').exists()) {
-                                openshift.selector('dc', '${TEMPLATE_NAME}').delete()
-                                openshift.selector('svc', '${TEMPLATE_NAME}').delete()
-                                openshift.selector('route', '${TEMPLATE_NAME}').delete()
-                            }
-                            //create a new app using the new image promoted in last step
-                            openshift.newApp("${TEMPLATE_NAME}:${STAGE_TAG}").narrow("svc").expose("--port=${PORT}")
-                        }
-                    }
-                }
-            }
-            // post {
-            //     success {
-            //         //cest = TimeZone.getTimeZone("CEST")
-            //         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-            //             //emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-            //             mimeType: 'text/html',
-            //                 subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
-            //                     //  subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-            //                     to: "${MAIL_TO}",
-            //                         replyTo: "${MAIL_TO}"
-            //     }
-            // }
-        }
-        stage('Scale in STAGE') {
-            steps {
-                script {
-                    openshiftScale(namespace: "${STAGE_PROJECT}", deploymentConfig: "${TEMPLATE_NAME}", replicaCount: '1')
-                }
-            }
-        }
-
     }
-     //comment
-    // post {
-    //     failure {
-
-    //         emailext body: '''${SCRIPT, template="groovy-html.template"}''',
-    //             mimeType: 'text/html',
-    //                  subject: "Jenkins Build [${BUILD_STATUS}]: ${PROJECT_NAME} - Build # ${BUILD_NUMBER}",
-    //                     //   subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!",
-    //                     to: "${MAIL_TO}",
-    //                         replyTo: "${MAIL_TO}",
-    //                             recipientProviders: [[$class: 'CulpritsRecipientProvider']]
-    //     }
-
-    // }
-
 }
