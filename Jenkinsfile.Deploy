@@ -14,7 +14,7 @@ pipeline {
         EXECUTE_BUILD_STAGE = "true"
 
         APPLICATION_NAME = 'video-tool-app'
-        // GIT_REPO = "https://github.com/ivid-123/demoapp.git"
+        //  GIT_REPO = "https://github.com/ivid-123/demoapp.git"
         // GIT_BRANCH = "develop"
         STAGE_TAG = "promoteToQA"
         DEV_TAG = "1.0"
