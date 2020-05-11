@@ -28,11 +28,11 @@ pipeline {
     }
 
     stages {
-        stage('Get Latest Code') {
-            steps {
-               // git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
-            }
-        }
+        // stage('Get Latest Code') {
+        //     steps {
+        //         git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
+        //     }
+        // }
         // stage('Install Dependencies') {
         //     steps {
         //         sh 'npm install'
