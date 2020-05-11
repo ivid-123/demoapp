@@ -18,7 +18,7 @@ pipeline {
         // GIT_BRANCH = "develop"
         STAGE_TAG = "promoteToQA"
         DEV_TAG = "1.0"
-        DEV_PROJECT = "qa"
+        DEV_PROJECT = "dev"
         STAGE_PROJECT = "stage"
         TEMPLATE_NAME = "video-tool-template"
         ARTIFACT_FOLDER = "target"
