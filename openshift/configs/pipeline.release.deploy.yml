@@ -5,7 +5,7 @@ metadata:
     description: 'Builds develop branch'
   labels:
     app: video-tool-app-label
-  name: ivid.datacollection-video-tool-app-release-deploy
+  name: ivid.datacollection-video-tool-app-release-deploy-job
 spec:
   resources:
     limits:
