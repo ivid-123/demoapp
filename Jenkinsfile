@@ -14,8 +14,8 @@ pipeline {
         EXECUTE_BUILD_STAGE = "true"
 
         APPLICATION_NAME = 'video-tool-app'
-        GIT_REPO = "https://github.com/ivid-123/demoapp.git"
-        GIT_BRANCH = "master"
+        // GIT_REPO = "https://github.com/ivid-123/demoapp.git"
+        // GIT_BRANCH = "master"
         STAGE_TAG = "promoteToQA"
         DEV_TAG = "1.0"
         DEV_PROJECT = "dev"
@@ -28,31 +28,32 @@ pipeline {
     }
 
     stages {
-        stage('Get Latest Code') {
+        // stage('Get Latest Code') {
+        //     steps {
+        //         script {
+        //             openshift.withCluster() {
+        //                 openshift.withProject() {
+        //                     echo "Using project: ${openshift.project()}"
+        //                     openshift.selector("all", [template : "${TEMPLATE_NAME}"]).delete()
+        //                     if (openshift.selector("secrets", "${TEMPLATE_NAME}").exists()) {
+        //                         openshift.selector("secrets", "${TEMPLATE_NAME}").delete()
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
+        //     }
+        // }
+        // stage('Install Dependencies') {
+        //     steps {
+        //         sh 'npm install'
+        //         echo 'installing dependencies'
+        //     }
+        // }
+        stage('Build & Package') {
             steps {
                 script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            echo "Using project: ${openshift.project()}"
-                            openshift.selector("all", [template : "${TEMPLATE_NAME}"]).delete()
-                            if (openshift.selector("secrets", "${TEMPLATE_NAME}").exists()) {
-                                openshift.selector("secrets", "${TEMPLATE_NAME}").delete()
-                            }
-                        }
-                    }
-                }
-                git branch: "${GIT_BRANCH}", url: "${GIT_REPO}" // declared in environment
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-                echo 'installing dependencies'
-            }
-        }
-        stage('Source Build') {
-            steps {
-                script {
+                    sh 'npm install'
                     sh 'npm run build --prod'
                 }
             }
@@ -149,7 +150,6 @@ pipeline {
             }
             steps {
                 script {
-                    
                     openshift.withCluster() {
                         openshift.withProject(DEV_PROJECT) {
                             /**
