@@ -17,7 +17,7 @@ spec:
       uri: https://github.com/ivid-123/demoapp.git
   strategy:
     jenkinsPipelineStrategy:
-      jenkinsfilePath: Jenkinsfile
+      jenkinsfilePath: Jenkinsfile.Deploy
     type: JenkinsPipeline
   triggers:
     - github:
