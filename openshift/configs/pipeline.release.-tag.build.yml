@@ -14,7 +14,7 @@ spec:
   source:
     git:
       uri: https://github.com/ivid-123/demoapp.git
-      ref: origin/tags/*
+      ref: release
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfilePath: Jenkinsfile
