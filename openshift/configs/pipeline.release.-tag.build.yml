@@ -13,8 +13,8 @@ spec:
       memory: '1000Mi'
   source:
     git:
-      ref: v*
       uri: https://github.com/ivid-123/demoapp.git
+      ref: v_1.0.0
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfilePath: Jenkinsfile
