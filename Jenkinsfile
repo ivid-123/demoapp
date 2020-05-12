@@ -59,7 +59,7 @@ pipeline {
                     }
                     steps{
                         echo 'Valildation Stage - tslint'
-                        //sh 'npm run lint'
+                        sh 'npm run lint'
                     }
                 }
                 stage('Unit Test'){
@@ -69,7 +69,7 @@ pipeline {
                     steps{
                         script{
                             echo 'Test Stage - Launching unit tests'
-                            //sh 'npm run test --code-coverage'
+                            sh 'npm run test --code-coverage'
                         }
                     }
                 }
