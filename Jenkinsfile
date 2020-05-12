@@ -31,12 +31,12 @@ pipeline {
         stage('Build & Package') {
             steps {
                 script {
+                    echo 'Tags build : ${env.TAG_NAME}'
                     sh 'npm install'
                     sh 'npm run build --prod'
                 }
             }
         }
-        
         stage('Validation'){
             when {
                 environment name: "EXECUTE_VALIDATION_STAGE", value: "true"
@@ -59,7 +59,7 @@ pipeline {
                     }
                     steps{
                         echo 'Valildation Stage - tslint'
-                        sh 'npm run lint'
+                        //sh 'npm run lint'
                     }
                 }
                 stage('Unit Test'){
@@ -69,7 +69,7 @@ pipeline {
                     steps{
                         script{
                             echo 'Test Stage - Launching unit tests'
-                            sh 'npm run test --code-coverage'
+                            //sh 'npm run test --code-coverage'
                         }
                     }
                 }
@@ -95,6 +95,5 @@ pipeline {
         //         }
         //     }
         // }
-       
     }
 }
