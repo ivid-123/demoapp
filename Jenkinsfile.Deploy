@@ -39,11 +39,7 @@ pipeline {
         //         echo 'installing dependencies'
         //     }
         // }
-<<<<<<< HEAD
-        stage('Build & Package for QA') {
-=======
         stage('Build & Package') {
->>>>>>> feature-123
             steps {
                 script {
                     sh 'npm install'
