@@ -31,6 +31,7 @@ pipeline {
         stage('Build & Package') {
             steps {
                 script {
+                    echo 'Tags build : ${env.TAG_NAME}'
                     sh 'npm install'
                     sh 'npm run build --prod'
                 }
