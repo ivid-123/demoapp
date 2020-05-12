@@ -168,7 +168,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to DEV') {
+        stage('Deploy to QA') {
             when {
                 expression {
                     openshift.withCluster() {
