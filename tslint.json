@@ -1,5 +1,8 @@
 {
   "extends": ["tslint:recommended"],
+  "linterOptions": {
+    "exclude": ["e2e"]
+  },
   "rules": {
     "array-type": false,
     "arrow-parens": false,
