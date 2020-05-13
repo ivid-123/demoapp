@@ -146,7 +146,7 @@ pipeline {
                             *   This creates the build configuration in the DEV project
                             *   Creates a entry in Builds as none latest and Images section with empty tag
                             */
-                            openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:latest", "--binary=true")
+                            openshift.newBuild("--name=${TEMPLATE_NAME}", "--docker-image=docker.io/nginx:mainline-alpine", "--binary=true")
                         }
 
                     }
