@@ -55,26 +55,42 @@ pipeline {
     }
 
     stages {
-        stage('Print version1') {
+        stage("Gather Pipeline Parameters") {
             steps {
-                echo '${params.TAG}'
-            }
-        }
-        stage('Example') {
-            steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: "${params.TAG}"]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    gitTool: 'Default',
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[url: 'https://github.com/ivid-123/demoapp.git']]
-                ])
-            }
-        }
-        stage('Print version') {
-            steps {
-                echo '${params.TAG}'
+                timeout(time: 300, unit: 'SECONDS') {
+                    script {
+                        // Show the select input modal
+                        def INPUT_PIPELINE_PARAMS = input(
+                            message: 'Please Provide Parameters', ok: 'Next',
+                            parameters: [
+                            // choice(name: 'BUILD', choices: ['false', 'true'].join('\n'), defaultValue: 'false', description: 'Do you want to enable Build ?'),
+                            // choice(name: 'TAGGING', choices: ['false', 'true'].join('\n'), defaultValue: 'false', description: 'Do you want to enable Tagging ?'),
+                            choice(name: 'IMAGETAG', choices: ['beta-1.0.0-rc1', 'beta-1.0.0-rc2', 'beta-1.0.0-rc3'].join('\n'), description: 'Choose a Image Tag'),
+                            choice(name: 'DEPLOY', choices: ['false', 'true'].join('\n'), defaultValue: 'false', description: 'Do you want to enable Deploy ?')])
+
+                        echo "  BUILD: ${INPUT_PIPELINE_PARAMS.BUILD}"
+                        echo "  TAG: ${INPUT_PIPELINE_PARAMS.TAGGING}"
+                        echo "  DEPLOY: ${INPUT_PIPELINE_PARAMS.DEPLOY}"
+
+                        // env.EXECUTE_VALIDATION_STAGE = INPUT_PIPELINE_PARAMS.BUILD
+                        // env.EXECUTE_VALID_PRETTIER_STAGE = EXECUTE_VALIDATION_STAGE
+                        // env.EXECUTE_VALID_TSLINT_STAGE = env.EXECUTE_VALIDATION_STAGE
+                        // env.EXECUTE_TEST_STAGE = env.EXECUTE_VALIDATION_STAGE
+                        // env.EXECUTE_BUILD_STAGE = env.EXECUTE_VALIDATION_STAGE
+                        env.EXECUTE_DEV_DEPLOY_STAGE = INPUT_PIPELINE_PARAMS.DEPLOY
+                        // env.EXECUTE_TAG_STAGE = INPUT_PIPELINE_PARAMS.TAGGING
+                        env.IMG_TAG = INPUT_PIPELINE_PARAMS.IMAGETAG
+
+                        echo "Using parameters: "
+                        echo "  SPA_NAME: ${SPA_NAME}"
+                        echo "  EXECUTE_BUILD_STAGE: ${EXECUTE_BUILD_STAGE}"
+                        echo "  EXECUTE_TAG_STAGE: ${EXECUTE_TAG_STAGE}"
+                        echo "  IMG_TAG: ${IMG_TAG}"
+                        echo "  EXECUTE_DEV_DEPLOY_STAGE: ${EXECUTE_DEV_DEPLOY_STAGE}"
+                        echo "  DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
+
+                    }
+                }
             }
         }
         // stage('Checkout') {
