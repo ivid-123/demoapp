@@ -26,8 +26,26 @@ pipeline {
         MAIL_TO = 'ashish.mishra2@soprasteria.com,arvind.singh@soprasteria.com,pallav.narang@soprasteria.com,jenkinstestuser01@gmail.com'
         // astha.bansal@soprasteria.com
     }
+    parameters {
+        gitParameter name: 'TAG',
+            type: 'PT_TAG',
+                defaultValue: 'release'
+    }
 
     stages {
+        stage('Checkout') {
+            steps {
+                echo "Tag selected : ${params.TAG}"
+                checkout([$class: 'GitSCM',
+                    branches: [[name: "${params.TAG}"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    gitTool: 'Default',
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[url: 'https://github.com/ivid-123/demoapp.git']]
+                ])
+            }
+        }
         stage('Promote to STAGE?') {
             steps {
                 timeout(time: 15, unit: 'MINUTES') {
