@@ -81,13 +81,13 @@ pipeline {
                         // env.EXECUTE_TAG_STAGE = INPUT_PIPELINE_PARAMS.TAGGING
                         env.IMG_TAG = INPUT_PIPELINE_PARAMS.IMAGETAG
 
-                        echo "Using parameters: "
-                        echo "  SPA_NAME: ${SPA_NAME}"
-                        echo "  EXECUTE_BUILD_STAGE: ${EXECUTE_BUILD_STAGE}"
-                        echo "  EXECUTE_TAG_STAGE: ${EXECUTE_TAG_STAGE}"
-                        echo "  IMG_TAG: ${IMG_TAG}"
-                        echo "  EXECUTE_DEV_DEPLOY_STAGE: ${EXECUTE_DEV_DEPLOY_STAGE}"
-                        echo "  DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
+                        // echo "Using parameters: "
+                        // echo "  SPA_NAME: ${SPA_NAME}"
+                        // echo "  EXECUTE_BUILD_STAGE: ${EXECUTE_BUILD_STAGE}"
+                        // echo "  EXECUTE_TAG_STAGE: ${EXECUTE_TAG_STAGE}"
+                        // echo "  IMG_TAG: ${IMG_TAG}"
+                        // echo "  EXECUTE_DEV_DEPLOY_STAGE: ${EXECUTE_DEV_DEPLOY_STAGE}"
+                        // echo "  DEPLOYMENT_NAME: ${DEPLOYMENT_NAME}"
 
                     }
                 }
