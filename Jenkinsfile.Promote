@@ -84,7 +84,7 @@ pipeline {
         stage("checkout the branch"){
             steps{
                 echo "${env.BRANCH_SCOPE}"
-                git  credentialsId: 'ea346a50-8bd8-419d-8af0-30960441fcd7', url: 'ssh://jenkins@git.company.com/usr/company/repositories/repo.git'
+                git  credentialsId: '', url: 'https://github.com/ivid-123/demoapp.git'
                 sh "git checkout -b build ${env.BRANCH_NAME}"
             }
         }
