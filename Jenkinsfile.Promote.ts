@@ -4,6 +4,23 @@ pipeline {
             label 'nodejs'
         }
     }
+    options{
+        buildDiscarder(
+            logRotator(daysToKeepStr: '5', numToKeepStr: '5')
+        )
+        disableConcurrentBuilds()
+    }
+    parameters {
+
+        extendedChoice(
+            name: 'TagName',
+            defaultValue: '',
+            description: 'tag name',
+            type: 'PT_SINGLE_SELECT',
+            groovyScript: """def gettags = ("git ls - remote - t https://github.com/ivid-123/demoapp.git").execute()
+               return gettags.text.readLines().collect { it.split()[1].replaceAll('refs/tags/', '').replaceAll("\\\\^\\\\{\\\\}", '') }
+        """,)
+    }
     environment {
         SPA_NAME = "video-tool"
         EXECUTE_VALIDATION_STAGE = "true"
@@ -26,24 +43,25 @@ pipeline {
         MAIL_TO = 'ashish.mishra2@soprasteria.com,arvind.singh@soprasteria.com,pallav.narang@soprasteria.com,jenkinstestuser01@gmail.com'
         // astha.bansal@soprasteria.com
     }
-    parameters {
-        gitParameter name: 'TAG',
-            type: 'PT_TAG',
-                defaultValue: 'release'
-    }
+    // parameters {
+    //     gitParameter name: 'TAG',
+    //         type: 'PT_TAG',
+    //             defaultValue: 'release'
+    // }
 
     stages {
         stage('Checkout') {
             steps {
-                echo "Tag selected : ${params.TAG}"
-                checkout([$class: 'GitSCM',
-                    branches: [[name: "${params.TAG}"]],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    gitTool: 'Default',
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[url: 'https://github.com/ivid-123/demoapp.git']]
-                ])
+                echo "running on tag ${TagName}"
+
+                // checkout([$class: 'GitSCM',
+                //     branches: [[name: "${params.TAG}"]],
+                //     doGenerateSubmoduleConfigurations: false,
+                //     extensions: [],
+                //     gitTool: 'Default',
+                //     submoduleCfg: [],
+                //     userRemoteConfigs: [[url: 'https://github.com/ivid-123/demoapp.git']]
+                // ])
             }
         }
         stage('Promote to STAGE?') {
