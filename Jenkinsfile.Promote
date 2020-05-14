@@ -53,12 +53,13 @@ pipeline {
             type: 'PT_TAG',
                 defaultValue: 'master'
     }
-    stage('Print version1') {
-        steps {
-            echo '${params.TAG}'
-        }
-    }
+
     stages {
+        stage('Print version1') {
+            steps {
+                echo '${params.TAG}'
+            }
+        }
         stage('Example') {
             steps {
                 checkout([$class: 'GitSCM',
