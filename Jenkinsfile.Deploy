@@ -4,6 +4,25 @@ pipeline {
             label 'nodejs'
         }
     }
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+            [key: 'ref', value: '$.ref']
+        ],
+
+            causeString: 'Triggered on $ref',
+
+            token: 'abc123',
+
+            printContributedVariables: true,
+            printPostContent: true,
+
+            silentResponse: false,
+
+            regexpFilterText: '$ref',
+            regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
+        )
+    }
     environment {
         SPA_NAME = "video-tool"
         EXECUTE_VALIDATION_STAGE = "true"
@@ -39,6 +58,11 @@ pipeline {
         //         echo 'installing dependencies'
         //     }
         // }
+        stage('Some step') {
+            steps {
+                sh "echo $ref"
+            }
+        }
         stage('Build & Package') {
             steps {
                 script {
